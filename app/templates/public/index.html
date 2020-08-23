@@ -6,9 +6,12 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Index</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <h1 style="color: blue;">Index</h1>
-    <p>This is an HTML file served up by Flask</p>
+<h1 style="color: blue;">Index</h1>
+<p>This is an HTML file served up by Flask</p>
+<img src="{{ url_for('static', filename='img/hologram.png') }}" alt="Hologram image" style="width: 300px;">
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
 </body>
 </html>
