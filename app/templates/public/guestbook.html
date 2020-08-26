@@ -1,0 +1,70 @@
+{% extends 'public/public_template.html' %}
+
+{% block title %}Guestbook{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Guestbook</h1>
+                <hr>
+
+                <div class="mb-3">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="name" placeholder="Your name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" cols="30" rows="10" class="form-control"
+                                  placeholder="Your message"></textarea>
+                    </div>
+
+                    <button class="btn btn-primary" id="submit" onclick="submit_message();">Submit message</button>
+                </div>
+
+                <h3>Messages</h3>
+                <hr>
+
+                <div class="mb-3" id="messages"></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        function submit_message() {
+            const name = document.getElementById('name');
+            const message = document.getElementById('message');
+
+            const entry = {
+                name: name.value,
+                message: message.value
+            };
+
+            fetch(`${window.origin}/guestbook/create-entry`, {
+                method: 'POST',
+                credentials: 'include',
+                body: JSON.stringify(entry),
+                cache: 'no-cache',
+                headers: new Headers({
+                    'content-type': 'application/json'
+                })
+            })
+                .then(function (response) {
+                    if (response.status !== 200) {
+                        console.log(`Looks like there was a problem. Status code: ${response.status}`);
+                        return;
+                    }
+                    response.json().then(function (data) {
+                        console.log(data)
+                    })
+                })
+                .catch(function (error) {
+                    console.log("Fetch error: " + error)
+                })
+        }
+    </script>
+{% endblock %}
